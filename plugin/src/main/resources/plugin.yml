@@ -1,0 +1,4 @@
+name: def-module
+version: '${version}'
+main: me.yesice.def.Def
+api-version: '1.19'
