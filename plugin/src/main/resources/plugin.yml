@@ -1,4 +1,6 @@
-name: def-module
+name: furnitures-module
 version: '${version}'
-main: me.yesice.def.Def
+main: me.yesice.furnitures.Furnitures
 api-version: '1.19'
+commands:
+  furnitures:
