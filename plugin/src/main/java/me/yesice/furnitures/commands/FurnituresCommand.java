@@ -2,7 +2,6 @@ package me.yesice.furnitures.commands;
 
 import me.yesice.furnitures.Furnitures;
 import me.yesice.furnitures.gui.FurnituresGui;
-import me.yesice.furnitures.api.objects.Furniture;
 import me.yesice.furnitures.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -20,7 +19,6 @@ import java.util.Set;
 
 public class FurnituresCommand implements CommandExecutor {
 
-    //
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) {
@@ -73,11 +71,6 @@ public class FurnituresCommand implements CommandExecutor {
                 Utils.sendMessage(player, "  &8• &e" + key);
             }
             Utils.sendMessage(player, "&r");
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("search")) {
-            String key = args[1];
-            List<Furniture> furnitures = Furnitures.getInstance().getFurnituresManager().searchFurniture(key.toLowerCase());
-
-            new FurnituresGui().openSearch(player, key, furnitures);
         } else {
             sendHelpMessage(player, label);
         }
@@ -90,7 +83,6 @@ public class FurnituresCommand implements CommandExecutor {
         Utils.sendMessage(player, " &c&l" + Utils.toSmallText("aiuto comandi") + " &7(/" + Utils.toSmallText(label) + ")");
         Utils.sendMessage(player, "  &8• &e/" + label + " categories");
         Utils.sendMessage(player, "  &8• &e/" + label + " furnitures <category>");
-        Utils.sendMessage(player, "  &8• &e/" + label + " search <key>");
         Utils.sendMessage(player, "&r");
     }
 }

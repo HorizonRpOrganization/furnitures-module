@@ -3,6 +3,7 @@ package me.yesice.furnitures;
 import me.yesice.furnitures.api.FurnituresAPI;
 import me.yesice.furnitures.commands.FurnituresCommand;
 import me.yesice.furnitures.listeners.FurnitureListener;
+import me.yesice.furnitures.listeners.FurnituresListener;
 import me.yesice.furnitures.listeners.InventoryListener;
 import me.yesice.furnitures.managers.BaseFurnituresManager;
 import me.yesice.furnitures.managers.DirectoryManager;
@@ -32,6 +33,7 @@ public final class Furnitures extends JavaPlugin implements FurnituresAPI {
 
         getServer().getPluginManager().registerEvents(new FurnitureListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new FurnituresListener(), this);
 
         getCommand("furnitures").setExecutor(new FurnituresCommand());
 

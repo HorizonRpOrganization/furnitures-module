@@ -7,5 +7,5 @@ import java.util.List;
 
 public record Furniture(String id, Material material, int modelData, String displayName, List<String> lore,
                         String category, List<Vector> seats, double offsetX, double offsetY,
-                        double offsetZ, boolean backwards) {
+                        double offsetZ, boolean backwards, String type) {
 }

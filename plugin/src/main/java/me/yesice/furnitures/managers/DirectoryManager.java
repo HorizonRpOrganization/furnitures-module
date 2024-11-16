@@ -54,8 +54,7 @@ public class DirectoryManager {
                 ConfigurationSection settingsSection = exampleFurnitureSection.createSection("settings");
                 ConfigurationSection itemSection = exampleFurnitureSection.createSection("item");
 
-                settingsSection.set("type", "ARMOR_STAND");
-                settingsSection.set("small", true);
+                settingsSection.set("type", "SMALL_ARMOR_STAND # ARMOR_STAND, SMALL_ARMOR_STAND, ITEM_FRAME");
                 settingsSection.set("offset", "0.0#0.0#0.0");
                 settingsSection.set("backwards", true);
                 settingsSection.set("floor", true);

@@ -42,6 +42,8 @@ public class BaseFurnituresManager implements FurnituresManager {
             return Optional.empty();
         }
 
+        String type = settingsSection.getString("type");
+
         int modelData = itemSection.getInt("model-data");
         String displayName = itemSection.getString("display-name", "Unknown");
         List<String> lore = itemSection.getStringList("lore");
@@ -75,7 +77,8 @@ public class BaseFurnituresManager implements FurnituresManager {
                 offsetX,
                 offsetY,
                 offsetZ,
-                backwards
+                backwards,
+                type
         ));
     }
 
@@ -132,9 +135,39 @@ public class BaseFurnituresManager implements FurnituresManager {
         return item;
     }
 
-    public boolean hasSmallArmorStand(Furniture furniture) {
+    public ItemStack getFurnitureItem(Furniture furniture) {
         FileConfiguration config = Furnitures.getInstance().getDirectoryManager().getFurnituresConfig(furniture.category());
-        return config != null && config.getBoolean("furnitures." + furniture.id() + ".settings.small", false);
+        if (config == null) return null;
+
+        ConfigurationSection furnitureSection = config.getConfigurationSection("furnitures." + furniture.id());
+        if (furnitureSection == null) return null;
+
+        ConfigurationSection itemSection = furnitureSection.getConfigurationSection("item");
+        if (itemSection == null || !itemSection.contains("material")) return null;
+
+        Material material;
+        try {
+            material = Material.valueOf(itemSection.getString("material"));
+        } catch (IllegalArgumentException e) {
+            return null; // Materiale non valido
+        }
+
+        int modelData = itemSection.getInt("model-data");
+        String displayName = itemSection.getString("display-name", "Unknown");
+        List<String> lore = itemSection.getStringList("lore");
+
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            meta.displayName(Component.text(Utils.color(displayName)));
+            meta.setCustomModelData(modelData);
+            meta.lore(Utils.colorList(lore));
+            meta.getPersistentDataContainer().set(new NamespacedKey(Furnitures.getInstance(), "furniture"), PersistentDataType.STRING, furniture.id());
+            meta.getPersistentDataContainer().set(new NamespacedKey(Furnitures.getInstance(), "category"), PersistentDataType.STRING, furniture.category());
+            item.setItemMeta(meta);
+        }
+
+        return item;
     }
 
     public boolean isPlaceableOnFloor(Furniture furniture) {
@@ -152,11 +185,6 @@ public class BaseFurnituresManager implements FurnituresManager {
         return config != null && config.getBoolean("furnitures." + furniture.id() + ".settings.ceiling", false);
     }
 
-    public List<Furniture> searchFurniture(String searchKey) {
-        searchKey = searchKey.toLowerCase(); // Metti in minuscolo per evitare problemi di case sensitivity
-        return searchFurnitureFromKey(searchKey).isEmpty() ? searchFurnitureFromDisplayName(searchKey) : searchFurnitureFromKey(searchKey);
-    }
-
     private List<Furniture> getFurnitures() {
         List<File> categories = Furnitures.getInstance().getDirectoryManager().getCategories();
         List<Furniture> furnitures = new ArrayList<>();
@@ -164,25 +192,6 @@ public class BaseFurnituresManager implements FurnituresManager {
         for (File categoryFile : categories) {
             String categoryName = categoryFile.getName();
             furnitures.addAll(getFurnituresOfCategory(categoryName));
-        }
-
-        return furnitures;
-    }
-
-    private List<Furniture> searchFurnitureFromKey(String searchKey) {
-        List<Furniture> furnitures = new ArrayList<>();
-
-        for (Furniture furniture : getFurnitures()) {
-            FileConfiguration config = Furnitures.getInstance().getDirectoryManager().getFurnituresConfig(furniture.category());
-
-            ConfigurationSection furnituresSection = config.getConfigurationSection("furnitures");
-            if (furnituresSection == null) continue;
-
-            for (String key : furnituresSection.getKeys(false)) {
-                if (key.toLowerCase().contains(searchKey)) {
-                    furnitures.addAll(getFurnitures(key));
-                }
-            }
         }
 
         return furnitures;
@@ -199,27 +208,5 @@ public class BaseFurnituresManager implements FurnituresManager {
         }
 
         return furnituresList;
-    }
-
-    private List<Furniture> searchFurnitureFromDisplayName(String searchKey) {
-        List<Furniture> furnitures = new ArrayList<>();
-
-        for (Furniture furniture : getFurnitures()) {
-            FileConfiguration config = Furnitures.getInstance().getDirectoryManager().getFurnituresConfig(furniture.category());
-
-            ConfigurationSection furnituresSection = config.getConfigurationSection("furnitures");
-            if (furnituresSection == null) return furnitures;
-
-            for (String key : furnituresSection.getKeys(false)) {
-                List<Furniture> furnituresList = getFurnitures(key);
-                for (Furniture furniture1 : furnituresList) {
-                    if (furniture1.displayName().toLowerCase().contains(searchKey)) {
-                        furnitures.add(furniture1);
-                    }
-                }
-            }
-        }
-
-        return furnitures;
     }
 }

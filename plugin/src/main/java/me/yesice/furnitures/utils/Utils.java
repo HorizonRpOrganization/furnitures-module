@@ -2,6 +2,8 @@ package me.yesice.furnitures.utils;
 
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -96,6 +98,28 @@ public class Utils {
         text = text.replace("Z", "ᴢ");
 
         return text;
+    }
+
+    public static boolean isSameBlockLocation(Location loc1, Location loc2) {
+        return loc1.getWorld().getName().equals(loc2.getWorld().getName()) &&
+                loc1.getBlockX() == loc2.getBlockX() &&
+                loc1.getBlockY() == loc2.getBlockY() &&
+                loc1.getBlockZ() == loc2.getBlockZ();
+    }
+
+    public static BlockFace getFacingDirectionFromYaw(float yaw) {
+        if (yaw < 0) {
+            yaw += 360;
+        }
+        if (yaw >= 315 || yaw < 45) {
+            return BlockFace.SOUTH;
+        } else if (yaw < 135) {
+            return BlockFace.WEST;
+        } else if (yaw < 225) {
+            return BlockFace.NORTH;
+        } else {
+            return BlockFace.EAST;
+        }
     }
 
     public static String getCardinalDirection(Entity e) {
