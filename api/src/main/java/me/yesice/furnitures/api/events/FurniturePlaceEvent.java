@@ -15,12 +15,12 @@ public class FurniturePlaceEvent extends Event implements Cancellable {
     private boolean isCancelled;
 
     private final Player player;
-    private final Entity holder;
+    private final ArmorStand armorStand;
     private final Furniture furniture;
 
-    public FurniturePlaceEvent(Player player, Entity holder, Furniture furniture) {
+    public FurniturePlaceEvent(Player player, ArmorStand armorStand, Furniture furniture) {
         this.player = player;
-        this.holder = holder;
+        this.armorStand = armorStand;
         this.furniture = furniture;
     }
 
@@ -28,8 +28,8 @@ public class FurniturePlaceEvent extends Event implements Cancellable {
         return player;
     }
 
-    public Entity getHolder() {
-        return holder;
+    public ArmorStand getArmorStand() {
+        return armorStand;
     }
 
     public Furniture getFurniture() {

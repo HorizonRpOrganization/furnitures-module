@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Optional;
 
-public class RegionUtils {
+public class RegionUtil {
 
     public static void sendRegionMessage(String region, Component text) {
         for (Player regionPlayer : getRegionPlayers(region)) {

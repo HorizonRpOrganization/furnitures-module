@@ -1,7 +1,7 @@
 package me.yesice.furnitures.api.events;
 
 import me.yesice.furnitures.api.objects.Furniture;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -12,12 +12,12 @@ public class FurnitureInteractEvent extends Event {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
-    private final Entity holder;
+    private final ArmorStand armorStand;
     private final Furniture furniture;
 
-    public FurnitureInteractEvent(Player player, Entity holder, Furniture furniture) {
+    public FurnitureInteractEvent(Player player, ArmorStand armorStand, Furniture furniture) {
         this.player = player;
-        this.holder = holder;
+        this.armorStand = armorStand;
         this.furniture = furniture;
     }
 
@@ -25,8 +25,8 @@ public class FurnitureInteractEvent extends Event {
         return player;
     }
 
-    public Entity getHolder() {
-        return holder;
+    public ArmorStand getArmorStand() {
+        return armorStand;
     }
 
     public Furniture getFurniture() {

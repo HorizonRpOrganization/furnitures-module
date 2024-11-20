@@ -1,0 +1,19 @@
+categories:
+  - example
+
+furnitures:
+  example:
+    settings:
+      type: SMALL_ARMOR_STAND # ARMOR_STAND, SMALL_ARMOR_STAND
+      offset: 0.0#0.0#0.0
+      backwards: true
+      floor: true
+      walls: false
+      ceiling: false
+      category: example
+    item:
+      material: BARRIER
+      model-data: 0
+      display-name: '&fExample'
+      lore: []
+    seats: []

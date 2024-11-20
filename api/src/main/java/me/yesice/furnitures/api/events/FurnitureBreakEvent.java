@@ -2,7 +2,6 @@ package me.yesice.furnitures.api.events;
 
 import me.yesice.furnitures.api.objects.Furniture;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -15,12 +14,12 @@ public class FurnitureBreakEvent extends Event implements Cancellable {
     private boolean isCancelled;
 
     private final Player player;
-    private final Entity holder;
+    private final ArmorStand armorStand;
     private final Furniture furniture;
 
-    public FurnitureBreakEvent(Player player, Entity holder, Furniture furniture) {
+    public FurnitureBreakEvent(Player player, ArmorStand armorStand, Furniture furniture) {
         this.player = player;
-        this.holder = holder;
+        this.armorStand = armorStand;
         this.furniture = furniture;
     }
 
@@ -28,8 +27,8 @@ public class FurnitureBreakEvent extends Event implements Cancellable {
         return player;
     }
 
-    public Entity getHolder() {
-        return holder;
+    public ArmorStand getArmorStand() {
+        return armorStand;
     }
 
     public Furniture getFurniture() {

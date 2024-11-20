@@ -2,32 +2,27 @@ package me.yesice.furnitures.utils;
 
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static net.kyori.adventure.text.Component.text;
-
-public class Utils {
+public class Util {
 
     public static String color(String message) {
         String hexPattern = "(&#([0-9a-fA-F]{6}))";
         Pattern compiledPattern = Pattern.compile(hexPattern);
         Matcher matcher = compiledPattern.matcher(message);
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         while (matcher.find()) {
             String hexCode = matcher.group(2);
-            String replacement = ChatColor.COLOR_CHAR + "x";
+            StringBuilder replacement = new StringBuilder(ChatColor.COLOR_CHAR + "x");
             for (char c : hexCode.toCharArray()) {
-                replacement += ChatColor.COLOR_CHAR + "" + c;
+                replacement.append(ChatColor.COLOR_CHAR + "").append(c);
             }
-            matcher.appendReplacement(buffer, replacement);
+            matcher.appendReplacement(buffer, replacement.toString());
         }
         matcher.appendTail(buffer);
         return ChatColor.translateAlternateColorCodes('&', buffer.toString());
@@ -37,10 +32,6 @@ public class Utils {
         List<Component> components = new ArrayList<>();
         list.forEach(string -> components.add(Component.text(color(string))));
         return components;
-    }
-
-    public static void sendMessage(Player player, String message) {
-        player.sendMessage(text(color(message)));
     }
 
     public static String toSmallText(String text) {
@@ -67,7 +58,7 @@ public class Utils {
         text = text.replace("u", "ᴜ");
         text = text.replace("v", "ᴠ");
         text = text.replace("w", "ᴡ");
-        text = text.replace("x", "x");
+        text = text.replace("x", "х");
         text = text.replace("y", "ʏ");
         text = text.replace("z", "ᴢ");
         text = text.replace("A", "ᴀ");
@@ -98,28 +89,6 @@ public class Utils {
         text = text.replace("Z", "ᴢ");
 
         return text;
-    }
-
-    public static boolean isSameBlockLocation(Location loc1, Location loc2) {
-        return loc1.getWorld().getName().equals(loc2.getWorld().getName()) &&
-                loc1.getBlockX() == loc2.getBlockX() &&
-                loc1.getBlockY() == loc2.getBlockY() &&
-                loc1.getBlockZ() == loc2.getBlockZ();
-    }
-
-    public static BlockFace getFacingDirectionFromYaw(float yaw) {
-        if (yaw < 0) {
-            yaw += 360;
-        }
-        if (yaw >= 315 || yaw < 45) {
-            return BlockFace.SOUTH;
-        } else if (yaw < 135) {
-            return BlockFace.WEST;
-        } else if (yaw < 225) {
-            return BlockFace.NORTH;
-        } else {
-            return BlockFace.EAST;
-        }
     }
 
     public static String getCardinalDirection(Entity e) {
