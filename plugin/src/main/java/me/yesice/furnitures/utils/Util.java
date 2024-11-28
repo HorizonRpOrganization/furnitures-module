@@ -32,7 +32,7 @@ public class Util {
         List<Component> components = new ArrayList<>();
         list.forEach(string -> components.add(Component.text(color(string))));
         return components;
-    }//
+    }
 
     public static String toSmallText(String text) {
         text = text.replace("a", "ᴀ");
